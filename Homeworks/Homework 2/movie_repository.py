@@ -34,18 +34,17 @@ class MovieRepository:
         with open('movies.json', 'w') as f:
             json.dump(self.movies, f, cls=movie.MovieEncoder)
 
-    def replace(self, movie_object):
-        try:
-            movie_index = self.movies.index(movie_object)
-            movie_object.id = self.movies[movie_index].id
-            del self.movies[movie_index]
+    def replace(self, movie_id, movie_object):
+        found_movie = next((_movie for _movie in self.movies if _movie.id == movie_id), None)
 
+        if found_movie:
+            movie_object.id = movie_id
+            self.movies.remove(found_movie)
             self.movies.append(movie_object)
 
             with open('movies.json', 'w') as f:
                 json.dump(self.movies, f, cls=movie.MovieEncoder)
-
-        except ValueError:
+        else:
             self.add(movie_object)
 
     def replace_all(self, new_movies):

@@ -60,6 +60,4 @@ if __name__ == '__main__':
     with open('movies.json', 'w') as f:
         json.dump(movies, f, cls=MovieEncoder)
 
-        # print(json.dumps(movies, cls=MovieEncoder))
-
-        # result = json.JSONDecoder(object_hook=from_json).decode(json.dumps(movies, cls=MovieEncoder))
+    print('Finished adding movies')

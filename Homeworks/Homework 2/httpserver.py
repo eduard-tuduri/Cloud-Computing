@@ -12,126 +12,142 @@ repository = MovieRepository()
 
 
 class RestHTTPServerHandler(BaseHTTPRequestHandler):
-    def do_HEAD(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
+    def set_header(self, status_code, content_type):
+        self.send_response(status_code)
+        self.send_header('Content-type', content_type)
         self.end_headers()
 
+    def do_HEAD(self):
+        self.set_header(200, 'application/json')
+
     def do_POST(self):
-        path_elements = self.path.split('/')
+        try:
+            path_elements = self.path.split('/')
 
-        if path_elements[1] != 'movies':
-            self.send_response(400)  # bad request
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
-        else:
-            if len(path_elements) == 2:  # /movies
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
+            if path_elements[1] != 'movies':
+                self.set_header(400, 'application/json')
+                self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
+            else:
+                if len(path_elements) == 2:  # /movies
+                    self.set_header(200, 'application/json')
 
-                content_len = int(self.headers.get('content-length', 0))
-                post_body = self.rfile.read(content_len)
+                    content_len = int(self.headers.get('content-length', 0))
+                    post_body = self.rfile.read(content_len)
 
-                sent_movie = json.JSONDecoder(object_hook=from_json_to_dto).decode(post_body.decode())
+                    sent_movie = json.JSONDecoder(object_hook=from_json_to_dto).decode(post_body.decode())
 
-                self.wfile.write(json.dumps(repository.add(sent_movie), cls=MovieEncoder).encode())
-            else:  # /movies/1
-                self.send_response(400)  # bad request
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps({'error': 'POST request should be called on a collection'}).encode())
+                    self.wfile.write(json.dumps(repository.add(sent_movie), cls=MovieEncoder).encode())
+                else:  # /movies/1
+                    self.set_header(400, 'application/json')
+                    self.wfile.write(json.dumps({'error': 'POST request should be called on a collection'}).encode())
+
+        except AttributeError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
+
+        except ValueError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
     def do_GET(self):
-        path_elements = self.path.split('/')
+        try:
+            path_elements = self.path.split('/')
 
-        if path_elements[1] != 'movies':
-            self.send_response(400)  # bad request
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
-        else:
-            if len(path_elements) == 2:  # /movies
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(json.dumps(repository.get_all(), cls=MovieEncoder).encode())
-            else:  # /movies/1
-                requested_movie = repository.get(int(path_elements[2]))
+            if path_elements[1] != 'movies':
+                self.set_header(400, 'application/json')
+                self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
+            else:
+                if len(path_elements) == 2:  # /movies
+                    self.set_header(200, 'application/json')
+                    self.wfile.write(json.dumps(repository.get_all(), cls=MovieEncoder).encode())
+                else:  # /movies/1
+                    requested_movie = repository.get(int(path_elements[2]))
 
-                if requested_movie:
-                    self.send_response(200)
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps(requested_movie, cls=MovieEncoder).encode())
-                else:
-                    self.send_response(404)  # movie was not found
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({'error': 'requested movie was not found'}).encode())
+                    if requested_movie:
+                        self.set_header(200, 'application/json')
+                        self.wfile.write(json.dumps(requested_movie, cls=MovieEncoder).encode())
+                    else:
+                        self.set_header(404, 'application/json')
+                        self.wfile.write(json.dumps({'error': 'requested movie was not found'}).encode())
+
+        except AttributeError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
+
+        except ValueError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
     def do_PUT(self):
-        path_elements = self.path.split('/')
+        try:
 
-        if path_elements[1] != 'movies':
-            self.send_response(400)  # bad request
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
-        else:
-            if len(path_elements) == 2:  # /movies
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
+            path_elements = self.path.split('/')
 
-                content_len = int(self.headers.get('content-length', 0))
-                post_body = self.rfile.read(content_len)
+            if path_elements[1] != 'movies':
+                self.set_header(400, 'application/json')
+                self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
+            else:
+                if len(path_elements) == 2:  # /movies
+                    self.set_header(200, 'application/json')
 
-                sent_movies = json.JSONDecoder(object_hook=from_json_to_dto).decode(post_body.decode())
+                    content_len = int(self.headers.get('content-length', 0))
+                    post_body = self.rfile.read(content_len)
 
-                self.wfile.write(json.dumps(repository.replace_all(sent_movies), cls=MovieEncoder).encode())
-            else:  # /movies/1
-                self.send_response(400)  # bad request
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
+                    sent_movies = json.JSONDecoder(object_hook=from_json_to_dto).decode(post_body.decode())
 
-                content_len = int(self.headers.get('content-length', 0))
-                post_body = self.rfile.read(content_len)
+                    self.wfile.write(json.dumps(repository.replace_all(sent_movies), cls=MovieEncoder).encode())
+                else:  # /movies/1
+                    self.set_header(400, 'application/json')
 
-                sent_movie = json.JSONDecoder(object_hook=from_json_to_dto).decode(post_body.decode())
+                    content_len = int(self.headers.get('content-length', 0))
+                    post_body = self.rfile.read(content_len)
 
-                self.wfile.write(json.dumps(repository.replace(sent_movie), cls=MovieEncoder).encode())
+                    sent_movie = json.JSONDecoder(object_hook=from_json_to_dto).decode(post_body.decode())
+
+                    self.wfile.write(
+                        json.dumps(repository.replace(int(path_elements[2]), sent_movie), cls=MovieEncoder).encode())
+
+        except AttributeError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
+
+        except ValueError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
     def do_DELETE(self):
-        path_elements = self.path.split('/')
+        try:
 
-        if path_elements[1] != 'movies':
-            self.send_response(400)  # bad request
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
-        else:
-            if len(path_elements) == 2:  # /movies
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                repository.remove_all()
-                self.wfile.write(json.dumps({'message': 'all movies deleted'}).encode())
-            else:  # /movies/1
-                requested_movie = repository.get(int(path_elements[2]))
+            path_elements = self.path.split('/')
 
-                if requested_movie:
+            if path_elements[1] != 'movies':
+                self.set_header(400, 'application/json')
+                self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
+            else:
+                if len(path_elements) == 2:  # /movies
                     self.send_response(200)
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
-                    repository.remove(int(path_elements[2]))
-                    self.wfile.write(json.dumps({'message': 'movie deleted'}).encode())
-                else:
-                    self.send_response(404)  # movie was not found
-                    self.send_header('Content-type', 'application/json')
-                    self.end_headers()
-                    self.wfile.write(json.dumps({'error': 'requested movie was not found'}).encode())
+                    repository.remove_all()
+                    self.wfile.write(json.dumps({'message': 'all movies deleted'}).encode())
+                else:  # /movies/1
+                    requested_movie = repository.get(int(path_elements[2]))
+
+                    if requested_movie:
+                        self.set_header(200, 'application/json')
+                        repository.remove(int(path_elements[2]))
+                        self.wfile.write(json.dumps({'message': 'movie deleted'}).encode())
+                    else:
+                        self.set_header(404, 'application/json')
+                        self.wfile.write(json.dumps({'error': 'requested movie was not found'}).encode())
+
+        except AttributeError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
+
+        except ValueError:
+            self.send_header(500, 'application/json')
+            self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
 
 if __name__ == '__main__':
