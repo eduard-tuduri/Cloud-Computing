@@ -7,11 +7,11 @@ class MovieDTOEncoder(json.JSONEncoder):
 
 
 def from_json_to_dto(json_movie_dto):
-    return Movie(json_movie_dto['title'], json_movie_dto['year'], json_movie_dto['actors'],
-                 json_movie_dto['director'])
+    return MovieDTO(json_movie_dto['title'], json_movie_dto['year'], json_movie_dto['actors'],
+                    json_movie_dto['director'])
 
 
-class Movie:
+class MovieDTO:
     def __init__(self, title, year, actors, director):
         self.title = title
         self.year = year

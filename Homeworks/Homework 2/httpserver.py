@@ -29,7 +29,8 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
             else:
                 if len(path_elements) == 2:  # /movies
-                    self.set_header(200, 'application/json')
+                    # Gets the payload and saves it
+                    self.set_header(201, 'application/json')  # Created!
 
                     content_len = int(self.headers.get('content-length', 0))
                     post_body = self.rfile.read(content_len)
@@ -38,15 +39,16 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
 
                     self.wfile.write(json.dumps(repository.add(sent_movie), cls=MovieEncoder).encode())
                 else:  # /movies/1
-                    self.set_header(400, 'application/json')
+                    # Error! Can't make post request on an entity
+                    self.set_header(400, 'application/json')  # Bad Request!
                     self.wfile.write(json.dumps({'error': 'POST request should be called on a collection'}).encode())
 
         except AttributeError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
         except ValueError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
     def do_GET(self):
@@ -54,28 +56,30 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
             path_elements = self.path.split('/')
 
             if path_elements[1] != 'movies':
-                self.set_header(400, 'application/json')
+                self.set_header(400, 'application/json')  # Bad Request!
                 self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
             else:
                 if len(path_elements) == 2:  # /movies
-                    self.set_header(200, 'application/json')
+                    # Returns entire collection
+                    self.set_header(200, 'application/json')  # Success!
                     self.wfile.write(json.dumps(repository.get_all(), cls=MovieEncoder).encode())
                 else:  # /movies/1
+                    # Returns the requested entry
                     requested_movie = repository.get(int(path_elements[2]))
 
                     if requested_movie:
-                        self.set_header(200, 'application/json')
+                        self.set_header(200, 'application/json')  # Success!
                         self.wfile.write(json.dumps(requested_movie, cls=MovieEncoder).encode())
                     else:
-                        self.set_header(404, 'application/json')
+                        self.set_header(404, 'application/json')  # Not Found!
                         self.wfile.write(json.dumps({'error': 'requested movie was not found'}).encode())
 
         except AttributeError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
         except ValueError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
     def do_PUT(self):
@@ -88,7 +92,8 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
             else:
                 if len(path_elements) == 2:  # /movies
-                    self.set_header(200, 'application/json')
+                    # Replaces the entire collection with the one from the request payload
+                    self.set_header(200, 'application/json')  # Success!
 
                     content_len = int(self.headers.get('content-length', 0))
                     post_body = self.rfile.read(content_len)
@@ -97,7 +102,9 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
 
                     self.wfile.write(json.dumps(repository.replace_all(sent_movies), cls=MovieEncoder).encode())
                 else:  # /movies/1
-                    self.set_header(400, 'application/json')
+                    # Replaces the specified entry with the one from the payload. If it doesn't exist, it creates a
+                    # new one
+                    self.set_header(200, 'application/json')  # Success!
 
                     content_len = int(self.headers.get('content-length', 0))
                     post_body = self.rfile.read(content_len)
@@ -108,11 +115,11 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
                         json.dumps(repository.replace(int(path_elements[2]), sent_movie), cls=MovieEncoder).encode())
 
         except AttributeError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
         except ValueError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
     def do_DELETE(self):
@@ -125,28 +132,30 @@ class RestHTTPServerHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({'error': 'requested collection should be <<movies>>'}).encode())
             else:
                 if len(path_elements) == 2:  # /movies
-                    self.send_response(200)
+                    # Deletes the entire collection
+                    self.send_response(200)  # Success!
                     self.send_header('Content-type', 'application/json')
                     self.end_headers()
                     repository.remove_all()
                     self.wfile.write(json.dumps({'message': 'all movies deleted'}).encode())
                 else:  # /movies/1
+                    # Deletes the requested entry
                     requested_movie = repository.get(int(path_elements[2]))
 
                     if requested_movie:
-                        self.set_header(200, 'application/json')
+                        self.set_header(200, 'application/json')  # Success!
                         repository.remove(int(path_elements[2]))
                         self.wfile.write(json.dumps({'message': 'movie deleted'}).encode())
                     else:
-                        self.set_header(404, 'application/json')
+                        self.set_header(404, 'application/json')  # Not Found!
                         self.wfile.write(json.dumps({'error': 'requested movie was not found'}).encode())
 
         except AttributeError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
         except ValueError:
-            self.send_header(500, 'application/json')
+            self.send_header(500, 'application/json')  # Internal Server Error!
             self.wfile.write(json.dumps({'error': 'Internal Server Error! Bad Attribute'}).encode())
 
 
