@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from bookshelf import get_model, oauth2, storage, tasks
+from cloudmovies import get_model, oauth2, storage
 from flask import Blueprint, current_app, redirect, render_template, request, \
     session, url_for
-
 
 crud = Blueprint('crud', __name__)
 
@@ -46,11 +45,11 @@ def list():
     if token:
         token = token.encode('utf-8')
 
-    books, next_page_token = get_model().list(cursor=token)
+    movies, next_page_token = get_model().list(cursor=token)
 
     return render_template(
         "list.html",
-        books=books,
+        movies=movies,
         next_page_token=next_page_token)
 
 
@@ -61,20 +60,20 @@ def list_mine():
     if token:
         token = token.encode('utf-8')
 
-    books, next_page_token = get_model().list_by_user(
+    movies, next_page_token = get_model().list_by_user(
         user_id=session['profile']['id'],
         cursor=token)
 
     return render_template(
         "list.html",
-        books=books,
+        movies=movies,
         next_page_token=next_page_token)
 
 
 @crud.route('/<id>')
 def view(id):
-    book = get_model().read(id)
-    return render_template("view.html", book=book)
+    movie = get_model().read(id)
+    return render_template("view.html", movie=movie)
 
 
 @crud.route('/add', methods=['GET', 'POST'])
@@ -88,26 +87,21 @@ def add():
         if image_url:
             data['imageUrl'] = image_url
 
-        # If the user is logged in, associate their profile with the new book.
+        # If the user is logged in, associate their profile with the new movie.
         if 'profile' in session:
             data['createdBy'] = session['profile']['displayName']
             data['createdById'] = session['profile']['id']
 
-        book = get_model().create(data)
+        movie = get_model().create(data)
 
-        # [START enqueue]
-        q = tasks.get_books_queue()
-        q.enqueue(tasks.process_book, book['id'])
-        # [END enqueue]
+        return redirect(url_for('.view', id=movie['id']))
 
-        return redirect(url_for('.view', id=book['id']))
-
-    return render_template("form.html", action="Add", book={})
+    return render_template("form.html", action="Add", movie={})
 
 
 @crud.route('/<id>/edit', methods=['GET', 'POST'])
 def edit(id):
-    book = get_model().read(id)
+    movie = get_model().read(id)
 
     if request.method == 'POST':
         data = request.form.to_dict(flat=True)
@@ -117,14 +111,11 @@ def edit(id):
         if image_url:
             data['imageUrl'] = image_url
 
-        book = get_model().update(data, id)
+        movie = get_model().update(data, id)
 
-        q = tasks.get_books_queue()
-        q.enqueue(tasks.process_book, book['id'])
+        return redirect(url_for('.view', id=movie['id']))
 
-        return redirect(url_for('.view', id=book['id']))
-
-    return render_template("form.html", action="Edit", book=book)
+    return render_template("form.html", action="Edit", movie=movie)
 
 
 @crud.route('/<id>/delete')

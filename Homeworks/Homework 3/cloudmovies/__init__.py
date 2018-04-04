@@ -21,7 +21,6 @@ import google.cloud.logging
 import httplib2
 from oauth2client.contrib.flask_util import UserOAuth2
 
-
 oauth2 = UserOAuth2()
 
 
@@ -62,7 +61,10 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
 
     # Register the Bookshelf CRUD blueprint.
     from .crud import crud
-    app.register_blueprint(crud, url_prefix='/books')
+    app.register_blueprint(crud, url_prefix='/movies')
+
+    from .filter import _filter
+    app.register_blueprint(_filter, url_prefix='/filter')
 
     # Add a default root route.
     @app.route("/")
@@ -86,19 +88,12 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
 
 def get_model():
     model_backend = current_app.config['DATA_BACKEND']
-    if model_backend == 'cloudsql':
-        from . import model_cloudsql
-        model = model_cloudsql
-    elif model_backend == 'datastore':
+    if model_backend == 'datastore':
         from . import model_datastore
         model = model_datastore
-    elif model_backend == 'mongodb':
-        from . import model_mongodb
-        model = model_mongodb
     else:
         raise ValueError(
-            "No appropriate databackend configured. "
-            "Please specify datastore, cloudsql, or mongodb")
+            "No appropriate databackend configured.")
 
     return model
 

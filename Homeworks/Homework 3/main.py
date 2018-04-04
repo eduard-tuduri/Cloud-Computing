@@ -12,22 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import bookshelf
+import cloudmovies
 import config
 
 
-app = bookshelf.create_app(config)
-
-
-# [START books_queue]
-# Make the queue available at the top-level, this allows you to run
-# `psqworker main.books_queue`. We have to use the app's context because
-# it contains all the configuration for plugins.
-# If you were using another task queue, such as celery or rq, you can use this
-# section to configure your queues to work with Flask.
-with app.app_context():
-    books_queue = bookshelf.tasks.get_books_queue()
-# [END books_queue]
+app = cloudmovies.create_app(config)
 
 
 # This is only used when running locally. When running live, gunicorn runs
