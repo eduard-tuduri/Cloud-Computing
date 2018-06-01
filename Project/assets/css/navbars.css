@@ -1,0 +1,145 @@
+body {
+    overflow: hidden !important;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.sidebar .sidebar-wrapper {
+    font-family: 'Roboto', sans-serif;
+    position: fixed;
+    background-color: #6bbfbf;
+}
+
+a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.navbar {
+    position: fixed;
+    width: 80%;
+    height: 75px;
+    background-color: #f1f1f1;
+    right: 0px;
+    z-index: 1;
+    border-bottom: 1px solid #dadada;
+}
+
+.field {
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.left-field {
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 10px;
+}
+
+.sidebar-wrapper {
+    position: fixed;
+    width: 20%;
+    height: 100vh;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+}
+
+.logo {
+    height: 10%;
+    text-align: center;
+}
+
+.logo a {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: x-large;
+}
+
+.sidebar-wrapper hr {
+    margin: 0px 10%;
+    border-top: 0px;
+    border-color: #838383;
+}
+
+div.sidebar-wrapper div.logo a.simple-text {
+    color: white !important;
+}
+
+.nav {
+    padding-left: 0px;
+}
+
+.nav li a {
+    margin-left: 10%;
+}
+
+div.sidebar-wrapper ul.nav li a p {
+    color: white;
+    font-size: 16px;
+    display: inline-block;
+}
+
+div.sidebar-wrapper ul.nav li a i {
+    color: white;
+    font-size: 20px;
+}
+
+.sidebar-wrapper .nav > li:hover {
+    background-color: #83dddd;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
+    color: #006060;
+}
+
+div nav #mainNavBar ul.nav.navbar-right li :hover {
+    color: black;
+}
+
+@media (max-width: 992px) {
+    .navbar .container-fluid {
+        background-color: white;
+    }
+
+    div.sidebar-wrapper ul.nav li a p {
+        font-size: 14px;
+        margin-top: 7px;
+        margin-right: 10px;
+        line-height: 26px;
+        color: #006060;
+    }
+
+    div.sidebar-wrapper ul.nav li a i {
+        font-size: 18px;
+        margin-top: 7px;
+        margin-right: 10px;
+        line-height: 26px;
+        color: #006060;
+    }
+
+    li:not(.active) > a, .off-canvas-sidebar[data-background-color="white"] .nav li:not(.active) > a {
+        color: #006060;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .sidebar-wrapper .nav > li:hover {
+        background-color: transparent;
+    }
+
+}
+

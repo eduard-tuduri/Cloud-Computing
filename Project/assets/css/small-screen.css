@@ -1,0 +1,33 @@
+#container{
+    display: none;
+}
+
+#phone {
+    font-size: 200px;
+    -moz-transition: all 3s ease;
+    -webkit-transition: all 3s ease;
+    -o-transition: all 3s ease;
+    transition: all 3s ease;
+}
+
+#container h2{
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.rotate {
+    -moz-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transition: 2s;
+}
+
+@media (max-width: 650px) {
+    #wide-screen{
+        display: none;
+    }
+    #container{
+        display: inherit;
+    }
+}

@@ -1,0 +1,32 @@
+div .modal-content{
+    width: 30%;
+    height: 230px;
+    border-radius: 10px;
+}
+
+div#result h3{
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+.custom-button2 {
+    border: 1px solid #4caeae;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #6bbfbf;
+    color: white;
+    margin:0px 5px;
+}
+
+.custom-button2:hover {
+    cursor: pointer;
+    background-color: #438585;
+}
+.custom-button2:active {
+    cursor: pointer;
+    background-color: #509797;
+}
+
+button:focus {outline:0;}

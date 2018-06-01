@@ -1,0 +1,144 @@
+body {
+    background-image: url(../img/bgstart.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+
+/*  NAVBAR  */
+
+.navbar {
+    background: transparent;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.navbar a {
+    text-decoration: none;
+}
+
+.navbar-header {
+    float: left;
+    display: inline;
+}
+
+.navbar-content {
+    float: right;
+}
+
+.navbar-content ul li {
+    list-style: none;
+}
+
+.hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.panel-heading {
+    padding: 5px 15px;
+}
+
+.panel-body {
+    background-color: rgb(239, 239, 239);
+}
+
+.panel-footer {
+    padding: 1px 15px;
+    color: #A0A0A0;
+    text-align: center;
+    font-size: 12px;
+    margin: 3px 0px;
+}
+
+.profile-img {
+    margin: 0 auto 10px;
+    display: block;
+}
+
+.vertical-center {
+    min-height: 100%;
+    /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh;
+    /* These two lines are counted as one :-)       */
+    display: flex;
+    align-items: center;
+}
+
+.register-panel {
+    width: 50%;
+    margin: auto;
+    background-color: rgb(239, 239, 239);
+    border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+    .register-panel {
+        width: 80%;
+    }
+}
+
+@media (min-width: 1000px) {
+    .register-panel {
+        width: 30%;
+    }
+}
+
+.social-media-login:hover {
+    filter: contrast(150%)
+}
+
+.hidden {
+    display: none !important;
+}
+
+.form-control {
+    text-indent: 10px;
+    display: block;
+    width: 100%;
+    height: 30px;
+    font-size: 13px;
+    line-height: 2;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+}
+
+.form-group {
+    margin-bottom: 8px;
+}
+
+.form-fieldset {
+    border: 1.3px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-login-button{
+    border-radius: 15px;
+    width: 100%;
+    height: 45px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #5ab196;
+    color: #e3e3e3;
+    font-size: 15px
+}
+
+.error-section{
+    text-align: center;
+    font-size: 12px;
+    color: #ff282a;
+    font-weight: bold;
+}

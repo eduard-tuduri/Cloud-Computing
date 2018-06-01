@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Lesson</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/navbars.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/canvas.css">
+    <link rel="stylesheet" href="assets/css/Lesson.css">
+    <link href="assets/css/letter-svg.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/Loading.css">
+    <link rel="stylesheet" href="assets/css/small-screen.css">
+    <link rel="stylesheet" href="assets/css/modal.css">
+    <link rel="stylesheet" href="assets/css/dropdown.css">
+</head>
+
+<body>
+
+<div class="container-fluid text-center" id="container">
+        <span onclick="rotate_phone()" id="phone">
+            <i id="rt" class="fa fa-mobile" aria-hidden="true"></i>
+        </span>
+    <h2><b>Please rotate your device</b></h2>
+</div>
+
+<div id="wide-screen">
+
+    <nav class="navbar" style="width: 100%; height: 5%;">
+        <div class="left-field">
+            <a href="ListOfLessons.html">
+                <p>Asle</p>
+            </a>
+        </div>
+
+        <div class="left-field">
+            <a href="ListOfLessons.html">
+                <i class="fa fa-book" aria-hidden="true"></i>
+                <p style="display: inline-block">Lessons</p>
+            </a>
+        </div>
+
+        <div class="left-field">
+            <a href="ListOfLessons.html">
+                <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                <p style="display: inline-block">Stats</p>
+            </a>
+        </div>
+
+        <div class="field">
+            <div class="dropdown">
+                <i class="fa fa-user-circle user dropbtn" aria-hidden="true"></i>
+                <p id="username" style="display: inline-block;"></p>
+                <div class="dropdown-content">
+                    <a href="user%20static%20page/profile.html">Profile</a>
+                    <a href="#" onclick="logout();">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="wrapper" style="padding-top: 80px;">
+        <div class="row" align="center">
+            <div class="arrows">
+            <span>
+                <i class="fa fa-angle-left" aria-hidden="true" onclick="MovePreviousQuestion()"></i>
+            </span>
+            </div>
+
+            <div id="question-container">
+
+                <div class="row">
+                    <div class="progress custom-progress-bar">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                             aria-valuemin="0" aria-valuemax="100" style="width:70%">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h3> Next you'll have to draw letter <strong id="pron"></strong></h3>
+                </div>
+
+                <div class="row" align="center">
+                    <div id="letter-drowing" align="center">
+                        <div id="bm"></div>
+                        <span onclick="refresh()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                     </span>
+                    </div>
+                </div>
+
+                <div id="canvas-container" class="row" align="center">
+                    <div id="canvas">
+                        <canvas id="myCanvas" class="img-responsive" height="400" width="800"></canvas>
+                    </div>
+                </div>
+
+                <div class="row" id="last-row-buttons" align="center">
+                    <button class="custom-button" onclick="clearArea(correct_answers[index])">Clear Area</button>
+
+                    <span data-toggle="tooltip" title="Undo" onclick="undo()">
+                    <i class="fa fa-undo" aria-hidden="true"></i>
+                </span>
+
+                    <span data-toggle="tooltip" title="Redo" onclick="redo()">
+                    <i class="fa fa-repeat" aria-hidden="true"></i>
+                </span>
+                    <button class="custom-button" onclick="testImage()">Test</button>
+                </div>
+            </div>
+
+            <div class="arrows">
+            <span>
+                <i class="fa fa-angle-right" aria-hidden="true" onclick="MoveNextQuestion()"></i>
+            </span>
+            </div>
+
+            <div class="custom-modal"></div>
+
+            <!-- Response Modal -->
+            <div class="overlay is-hidden" id="overlay">
+                <div class="modal-content">
+                    <span class="button-close" onclick="closeModal();"></span>
+
+                    <div id="result" align="center">
+
+                    </div>
+                </div>
+            </div>
+            <!-- Response Modal -->
+
+        </div>
+
+        <div id="resources" align="center"></div>
+    </div>
+</div>
+
+
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    let config = {
+        apiKey: "AIzaSyDfKkiegV-dCw0ach9PWJAIUJpDq7ZfQos",
+        authDomain: "asle-a66d5.firebaseapp.com",
+        databaseURL: "https://asle-a66d5.firebaseio.com",
+        projectId: "asle-a66d5",
+        storageBucket: "asle-a66d5.appspot.com",
+        messagingSenderId: "744977998100"
+    };
+    firebase.initializeApp(config);
+</script>
+
+<script src="assets/js/modal.js" type="text/javascript"></script>
+<script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+<script type="text/javascript" src="assets/js/canvas.js"></script>
+<script src="assets/js/bodymovin.js"></script>
+<script src="assets/js/letter-drawing.js" type="text/javascript"></script>
+<script src="assets/js/small-screen.js" type="text/javascript"></script>
+</html>

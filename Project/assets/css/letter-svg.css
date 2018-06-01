@@ -1,0 +1,10 @@
+.start{
+    fill: transparent;
+    stroke: #4b4b4b;
+    stroke-width: 2px;
+}
+.finished{
+    fill: black;
+    stroke: transparent;
+
+}

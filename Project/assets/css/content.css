@@ -1,0 +1,145 @@
+body {
+    background-color: #f1f1f1;
+    margin-top: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.progress-bar-success {
+    background-color: #007B7B;
+}
+
+.content {
+    font-family: 'Roboto', sans-serif;
+}
+
+.content > .row {
+    cursor: pointer;
+}
+
+.main-panel {
+    width: 80%;
+    float: right;
+}
+
+.main-content {
+    position: relative;
+    height: calc(100vh - 75px);
+    overflow-x: scroll;
+    padding-top: 85px;
+}
+
+.card {
+    position: relative;
+    background-color: white;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+
+.round-img {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    border: dotted black;
+    display: inline-block;
+    float: left;
+    margin: 10px 10px;
+}
+
+.lesson-title {
+    display: inline-block;
+    padding-left: 35px;
+    color: #343434;
+}
+
+.row {
+    position: relative;
+}
+
+.lesson-description {
+    padding-left: 15px;
+    font-weight: 300;
+    font-size: 14px;
+    color: #9A9A9A;
+    display: inline-block;
+}
+
+.progress-dimentions {
+    position: absolute;
+    left: 70%;
+    top: 50%;
+    width: 25%;
+}
+
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+
+  width: 100%;
+  height: 20px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+progress[value]::-webkit-progress-value {
+  background-image:
+	   -webkit-linear-gradient(-45deg,
+	                           transparent 33%, rgba(0, 0, 0, .1) 33%,
+	                           rgba(0,0, 0, .1) 66%, transparent 66%),
+	   -webkit-linear-gradient(top,
+	                           rgba(255, 255, 255, .25),
+	                           rgba(0, 0, 0, .25)),
+	   -webkit-linear-gradient(left, #00b7b7, #00b7b7);
+
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+progress[value]::-webkit-progress-value::before {
+  content: '80%';
+  position: absolute;
+  right: 0;
+  top: -125%;
+}
+
+.edit-delete {
+    position: absolute;
+    width: 100%;
+    left: 85%;
+    bottom: 25%;
+    font-size: 40px;
+}
+
+.edit-delete i {
+    margin: 0px 10px;
+    color: #6a6a6a;
+}
+
+.edit-delete i:hover {
+    color: black;
+}
+
+@media (max-width: 991px) {
+    .edit-delete {
+        position: absolute;
+        left: 80%;
+        bottom: 25%;
+        font-size: 33px;
+    }
+}
+
+.card:hover {
+    filter: contrast(97%);
+}
+

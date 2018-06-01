@@ -1,0 +1,202 @@
+html,
+body {
+    overflow-x: hidden;
+    height: auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f3ef;
+    margin: 0px;
+}
+
+.content {
+    margin: 0 15px;
+}
+
+.card {
+    margin-top: 20px;
+    padding: 30px;
+    background-color: rgba(214, 224, 226, 0.2);
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.card.hovercard .card-background {
+    margin-bottom: 10px;
+    height: 130px;
+}
+
+.card-background img {
+    -webkit-filter: blur(25px);
+    -moz-filter: blur(25px);
+    -o-filter: blur(25px);
+    -ms-filter: blur(25px);
+    filter: blur(100px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+
+.card.hovercard .useravatar {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+}
+
+.overlay_photo_avatar {
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #0c92a8;
+}
+
+.photo_avatar:hover {
+    cursor: pointer;
+    opacity: 1;
+    transition: .3s ease;
+    filter: contrast(50%);
+}
+
+.overlay_photo_avatar .text {
+    color: #e1fff1;
+    font-size: 12px;
+    transform: translate(-50%, -50%);
+}
+
+.card.hovercard .useravatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.card.hovercard .card-info {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+}
+
+.card.hovercard .card-info .card-title {
+    padding: 0 5px;
+    font-size: 20px;
+    line-height: 1;
+    color: #262626;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.card.hovercard .card-info {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+
+.btn-pref .btn {
+    -webkit-border-radius: 0 !important;
+}
+
+.user_details {
+    margin-top: 6%;
+}
+
+.user_details h5 {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 2%
+}
+
+.user_details h5 span {
+    font-weight: normal;
+    text-align: center;
+    margin-left: 4%
+}
+
+.my_button {
+    border-radius: 10px;
+    border: 0px;
+    margin: 0px 5px;
+
+    margin-top: 2%;
+    margin-right: -4px;
+    height: 50px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: #19a8a8;
+    border-color: #19a8a8;
+    width: 15%
+}
+
+.my_button:hover {
+    background-color: #157171;
+    border-color: #157171;
+}
+
+.my_button:focus {
+    background-color: #157171;
+    border-color: #157171;
+}
+
+.wrapper {
+    min-height: 100vh;
+    position: relative;
+}
+
+.main-panel {
+    margin-top: 5.5%;
+    background-color: #f4f3ef;
+    position: relative;
+    float: right;
+    /*width: calc(100% - 260px);*/
+    max-width: 100%;
+    width: 80%;
+    min-height: 100%;
+}
+
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.half-colon {
+    width: 47%;
+    height: 400px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#right-column {
+    float: right;
+}
+

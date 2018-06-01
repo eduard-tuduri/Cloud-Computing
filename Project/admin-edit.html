@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/navbars.css" rel="stylesheet">
+    <link href="assets/css/admin-upload.css" rel="stylesheet">
+    <link href="assets/css/content.css" rel="stylesheet">
+    <link href="assets/css/modal.css" rel="stylesheet">
+    <link href="assets/css/Loading.css" rel="stylesheet">
+
+</head>
+<body onload="Init()">
+
+
+<div class="sidebar" data-background-color="white" data-active-color="danger">
+
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            <a href="#" class="simple-text">
+                AsLe
+            </a>
+        </div>
+
+        <hr>
+
+        <ul class="nav">
+            <li>
+                <a href="admin-lesson-list.html">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    <p>Lessons</p>
+                </a>
+            </li>
+            <li>
+                <a href="admin-upload.html">
+                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    <p>Upload Lesson</p>
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="logout();">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <p>Logout</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<nav class="navbar">
+    <div style="display: none;" class="field">
+        <i class="fa fa-user-circle user" aria-hidden="true"></i>
+        <a id="username" href="user%20static%20page/profile.html" style="display: inline-block">User</a>
+    </div>
+</nav>
+
+<div class="main-panel">
+
+    <div class="main-content">
+        <div class="container-fluid">
+
+            <div id="template">
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Response Modal -->
+    <div class="overlay is-hidden" id="overlay">
+        <div class="modal-content">
+            <span class="button-close" onclick="closeModal();"></span>
+
+            <div id="result" align="center">
+
+            </div>
+        </div>
+    </div>
+    <!-- Response Modal -->
+
+    <footer class="footer">
+        <div class="container-fluid">
+
+        </div>
+    </footer>
+</div>
+
+
+</body>
+
+<script src="assets/js/modal.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js" type="text/javascript"></script>
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script type="text/javascript">
+    var config = {
+        apiKey: "AIzaSyDfKkiegV-dCw0ach9PWJAIUJpDq7ZfQos",
+        authDomain: "asle-a66d5.firebaseapp.com",
+        databaseURL: "https://asle-a66d5.firebaseio.com",
+        projectId: "asle-a66d5",
+        storageBucket: "asle-a66d5.appspot.com",
+        messagingSenderId: "744977998100"
+    };
+    firebase.initializeApp(config);
+</script>
+<script src="assets/js/logout.js" type="text/javascript"></script>
+<script src="assets/js/admin-edit.js"></script>
+
+<script id="edit-template" type="text/html">
+    <div class="card">
+        <div class="content">
+            <form id="form">
+                <div class="form-group">
+                    <label for="lesson-title">Lesson title:</label>
+                    <input type="text" class="lesson-input" id="lesson-title" value="{{lesson_title}}">
+                </div>
+                <div id="exercises-description">
+                    <div class="form-group exercise-description">
+                        <div class="ex-element">
+                            <label>Letter 1:</label>
+                            <input type="text" class="exercises-input" id="letter" value="{{first_letter}}">
+                        </div>
+                        <div class="ex-element">
+                            <label>Letter 1 hex:</label>
+                            <input type="text" class="exercises-input" id="hex" value="{{first_hex}}">
+                        </div>
+
+                    </div>
+                </div>
+                {{#exercises}}
+                <div id="exercises-description{{index}}">
+                    <div class="form-group exercise-description">
+                        <div class="ex-element">
+                            <label>Letter {{index}}:</label>
+                            <input type="text" class="exercises-input" id="letter{{index}}" value="{{other_letters}}">
+                        </div>
+                        <div class="ex-element">
+                            <label>Letter {{index}} hex:</label>
+                            <input type="text" class="exercises-input" id="hex{{index}}" value="{{other_hex}}">
+                        </div>
+                        <i class="fa fa-times" aria-hidden="true" onclick="remove(event)"></i>
+
+                    </div>
+                </div>
+                {{/exercises}}
+                <div>
+                    <i class="fa fa-plus-square" aria-hidden="true" onclick="add_description()"></i>
+                </div>
+
+                <div class="upload-panel">
+                    <div class="panel-heading"><strong>Upload letter json</strong>
+                    </div>
+                    <hr>
+                    <div class="panel-body" id="panel-body">
+
+                        <h4>Select files from your computer</h4>
+                        <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+                            <label class="custom-button" id="upload-button">
+                                <input type="file" onchange="showFileInPage(event)"/>
+                                <i class="fa fa-upload" aria-hidden="true"></i>Custom Upload
+                            </label>
+                        </form>
+
+                        <h4>Or drag and drop files below</h4>
+                        <div class="upload-drop-zone" id="drop-zone">
+                            Just drag and drop files here
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Resources of interest:</label>
+                    <textarea id="text-area" rows="6">{{resources}}</textarea>
+                </div>
+
+                <button type="submit" class="custom-button" onclick="Submit(event)">Submit</button>
+            </form>
+
+
+        </div>
+    </div>
+</script>
+
+</html>

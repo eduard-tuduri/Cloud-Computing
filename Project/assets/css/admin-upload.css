@@ -1,0 +1,146 @@
+
+.content {
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-content {
+    position: relative;
+    height: calc(100vh - 75px);
+    overflow-x: scroll;
+    padding-top: 85px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.card:hover {
+    filter: contrast(100%)!important;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+.ex-element{
+    width: 47%;
+    display: inline-block;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 8px 20px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #cecece;
+}
+.ex-element:nth-child(odd){
+    margin-right: 10px;
+}
+.ex-element:nth-child(even){
+    margin-right: 5px;
+}
+
+.upload-panel{
+    margin: 3% 0% 2%;
+    border: 1px solid #cecece;
+    border-radius: 4px;
+    padding: 10px;
+
+}
+.panel-heading{
+    margin: 5px 0px;
+}
+.upload-panel hr{
+    border-color: #ededed;
+    border-bottom: 0px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-button {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #6bbfbf;
+    color: white;
+}
+
+.custom-button:hover{
+    background-color: #7dd5d5;
+}
+
+.custom-button i{
+    margin-right: 10px;
+}
+
+
+
+.upload-drop-zone {
+    height: 200px;
+    border-width: 2px;
+    margin-bottom: 20px;
+}
+
+.upload-drop-zone {
+    color: #ccc;
+    border-style: dashed;
+    border-color: #ccc;
+    line-height: 200px;
+    text-align: center
+}
+
+.upload-drop-zone.drop {
+    color: #222;
+    border-color: white;
+}
+
+.file-drag-over {
+    border-color: black;
+    color: black;
+}
+
+#panel-body p {
+    font-weight: bold;
+}
+
+.uploaded-files p, upladed-files i {
+    display: inline-block;
+    margin: 0px 5px;
+}
+
+textarea{
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.fa-plus-square{
+    color: gray;
+}
+.fa-plus-square:hover{
+    color: #656565;
+}
+.fa-plus-square:active{
+    color: #6d6d6d;
+}
+
+.uploaded-files {
+    color: gray;
+}
+.fa-times{
+    color: grey;
+}
+.fa-times:hover{
+    color: #656565;
+}
+.fa-times:active{
+    color: #6d6d6d;
+}
